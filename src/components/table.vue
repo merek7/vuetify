@@ -3,74 +3,79 @@
     <v-simple-table>
       <template v-slot:default>
         <thead>
-          <tr>
-            <th class="text-left">Name</th>
-            <th class="text-left">Calories</th>
+          <tr class="text-center">
+            <th>Id</th>
+            <th>titr</th>
+            <th>Contenue</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in desserts" :key="item.name">
-            <td>{{ item.name }}</td>
-            <td>{{ item.calories }}</td>
-          </tr>
+           <tr v-for="post in posts" :key="post.id ">
+            <td>{{ post.id }}</td>
+            <td>{{ post.title }}</td>
+            <td>{{ post.body }}</td>
+          </tr> 
         </tbody>
       </template>
     </v-simple-table>
-        <div class="text-center mt-4">
-          <v-pagination v-model="page" :length="4" circle></v-pagination>
-        </div>
+    <div class="text-center mt-4">
+      <v-pagination v-model="pagination.currentpage" 
+                     :total-visible="5"
+                    :length="pagination.totalpages"
+                    @input="getvalue"
+                    circle>
+              
+      </v-pagination>
+    </div>
   </v-container>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: "TablE",
   data() {
     return {
-      page:1,
-      desserts: [
-        {
-          name: "Frozen Yogurt",
-          calories: 159,
-        },
-        {
-          name: "Ice cream sandwich",
-          calories: 237,
-        },
-        {
-          name: "Eclair",
-          calories: 262,
-        },
-        {
-          name: "Cupcake",
-          calories: 305,
-        },
-        {
-          name: "Gingerbread",
-          calories: 356,
-        },
-        {
-          name: "Jelly bean",
-          calories: 375,
-        },
-        {
-          name: "Lollipop",
-          calories: 392,
-        },
-        {
-          name: "Honeycomb",
-          calories: 408,
-        },
-        {
-          name: "Donut",
-          calories: 452,
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-        },
-      ],
+      pagination:{
+        currentpage: 1,
+        totalpages:10,
+      },
+      posts:[],
     };
   },
+  mounted(){
+    // this.getfilmsaxios()
+    this.getpostsaxios()
+  },
+  methods:{
+    getvalue()
+    {
+      this.getpostsaxios()
+    },
+     getpostsaxios()
+    {
+      axios.get('https://jsonplaceholder.typicode.com/posts?_page='+ this.pagination.currentpage)
+        .then((response) => {
+          console.log(response.data)
+          this.posts=response.data
+          
+        })
+        .catch((error =>
+        {
+          console.log(error)
+        }))
+    },
+
+    getpostsasync()
+    {
+      fetch('https://jsonplaceholder.typicode.com/posts/?_start=0&_limit=10')
+      .then(async response =>{
+        const link = response.get
+        const json = await response.json()
+        console.log(link, json)
+        this.posts= json
+      })
+    }
+  }
 };
 </script>

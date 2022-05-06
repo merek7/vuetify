@@ -10,21 +10,21 @@
           <v-menu  
         bottom
         auto
-        left
-        offset-y>
+        right
+        offset-x>
             <template v-slot:activator="{ on, attrs }">
               <v-btn dark icon v-bind="attrs" v-on="on">
                 <v-icon>mdi-dots-vertical</v-icon>
               </v-btn>
             </template>
             <v-list nav dense>
-              <v-menu open-on-hover top offset-y>
+              <v-menu open-on-hover top offset-x>
                 <template v-slot:activator="{ on, attrs }">
                   <v-list-item v-bind="attrs" v-on="on">
                     <v-list-item-title>
-                    <v-list-item-icon>
+                    <!-- <v-list-item-icon>
                       <v-icon> mdi-home </v-icon>
-                    </v-list-item-icon>
+                    </v-list-item-icon> -->
                       {{ Menus[0].Menu }}
                     </v-list-item-title>
                   </v-list-item>
@@ -40,9 +40,9 @@
               <v-menu open-on-hover bottom offset-y>
                 <template v-slot:activator="{ on, attrs }">
                   <v-list-item v-bind="attrs" v-on="on">
-                    <v-list-item-icon>
+                    <!-- <v-list-item-icon>
                       <v-icon> mdi-home </v-icon>
-                    </v-list-item-icon>
+                    </v-list-item-icon> -->
                     <v-list-item-title>
                       {{ Menus[1].Menu }}
                     </v-list-item-title>
