@@ -1,5 +1,12 @@
 <template>
   <v-container>
+    <div class="container">
+      <v-text-field class="form-control text-center"  placeholder="Recherche" type="text" append-icon="mdi-database-search"
+      v-model="pagination.searchQuery">
+       
+      </v-text-field>
+    </div>
+    <paginate>
     <v-simple-table>
       <template v-slot:default>
         <thead>
@@ -27,6 +34,7 @@
               
       </v-pagination>
     </div>
+    </paginate>
   </v-container>
 </template>
 
@@ -39,9 +47,19 @@ export default {
       pagination:{
         currentpage: 1,
         totalpages:10,
+        searchQuery:""
       },
       posts:[],
     };
+  },
+  computed: {},
+  watch:
+  {
+    searchQuery()
+    {
+      console.log(this.pagination.searchQuery)
+
+    }
   },
   mounted(){
     // this.getfilmsaxios()
@@ -56,7 +74,7 @@ export default {
     {
       axios.get('https://jsonplaceholder.typicode.com/posts?_page='+ this.pagination.currentpage)
         .then((response) => {
-          console.log(response.data)
+         // console.log(response.data)
           this.posts=response.data
           
         })
